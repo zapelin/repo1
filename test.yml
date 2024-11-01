@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: etl
+  name: new_value
   labels:
     app.kubernetes.io/name: etl
     app.kubernetes.io/instance: etl
