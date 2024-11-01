@@ -1,46 +1,16 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: new_value
-  labels:
-    app.kubernetes.io/name: etl
-    app.kubernetes.io/instance: etl
-    app.kubernetes.io/part-of: afn
-  namespace: afn
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: etl
-      app.kubernetes.io/instance: etl
-      app.kubernetes.io/part-of: afn
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: etl
-        app.kubernetes.io/instance: etl
-        app.kubernetes.io/part-of: afn
-    spec:
-      containers:
-        - name: etl
-          image: afndev/afn-etl:0.0.9
-          resources:
-            requests:
-              cpu: 100m
-              memory: 500Mi
-            limits:
-              cpu: 1000m
-              memory: 1Gi
-          volumeMounts:
-            - name: etl-params-volume
-              mountPath: /etc/cron.d/crontabs
-              subPath: crontabs
-            - name: etl-params-volume
-              mountPath: /.env
-              subPath: env
-      volumes:
-        - name: etl-params-volume
-          configMap:
-            name: etl-params
-      imagePullSecrets:
-        - name: regcred
+name: etl
+image: afndev/afn-etl:0.0.10
+resources:
+  requests:
+    cpu: 100m
+    memory: 500Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+volumeMounts:
+  - name: etl-params-volume
+    mountPath: /etc/cron.d/crontabs
+    subPath: crontabs
+  - name: etl-params-volume
+    mountPath: /.env
+    subPath: env
